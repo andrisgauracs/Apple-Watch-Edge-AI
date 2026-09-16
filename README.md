@@ -1,4 +1,15 @@
-# A language model on an Apple Watch
+<p align="center">
+  <img src="docs/img/icon.png" width="132" alt="App icon: a small robot face wearing headphones">
+</p>
+
+<h1 align="center">A language model on an Apple Watch</h1>
+
+<p align="center">
+  Offline LLM inference on a six-year-old Apple Watch Series 6.<br>
+  Upstream llama.cpp, cross-compiled for watchOS.
+</p>
+
+---
 
 A watchOS app that runs a small quantized language model fully on-device,
 streams tokens to the screen, and reports live benchmark stats.
