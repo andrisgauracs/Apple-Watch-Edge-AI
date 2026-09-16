@@ -1,0 +1,107 @@
+[
+  {
+    "name": "Weather",
+    "triggers": [
+      "weather",
+      "temperature",
+      "how cold",
+      "how warm",
+      "how hot",
+      "outside"
+    ],
+    "url": "https://api.open-meteo.com/v1/forecast?latitude=45.42&longitude=-75.70&current=temperature_2m&timezone=auto",
+    "windowDays": null,
+    "maxChars": null,
+    "headers": {
+      "User-Agent": "WatchLLM/1.0 (Apple Watch on-device LLM demo; https://github.com/andrisgauracs)"
+    },
+    "auth": null,
+    "fields": {
+      "temp": [
+        "current",
+        "temperature_2m"
+      ]
+    },
+    "derived": null,
+    "jsonPath": null,
+    "factTemplate": "Live sensor reading: the temperature outside is {temp} degrees Celsius."
+  },
+  {
+    "name": "Bitcoin price",
+    "triggers": [
+      "bitcoin",
+      "btc",
+      "crypto"
+    ],
+    "url": "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd",
+    "windowDays": null,
+    "maxChars": null,
+    "headers": {
+      "User-Agent": "WatchLLM/1.0 (Apple Watch on-device LLM demo; https://github.com/andrisgauracs)"
+    },
+    "auth": null,
+    "fields": {
+      "price": [
+        "bitcoin",
+        "usd"
+      ]
+    },
+    "derived": null,
+    "jsonPath": null,
+    "factTemplate": "Live market data: bitcoin is trading at {price} US dollars."
+  },
+  {
+    "name": "USD to EUR rate",
+    "triggers": [
+      "dollar",
+      "euro",
+      "exchange rate",
+      "currency"
+    ],
+    "url": "https://api.frankfurter.app/latest?from=USD&to=EUR",
+    "windowDays": null,
+    "maxChars": null,
+    "headers": {
+      "User-Agent": "WatchLLM/1.0 (Apple Watch on-device LLM demo; https://github.com/andrisgauracs)"
+    },
+    "auth": null,
+    "fields": {
+      "rate": [
+        "rates",
+        "EUR"
+      ]
+    },
+    "derived": null,
+    "jsonPath": null,
+    "factTemplate": "Live market data: one US dollar is worth {rate} euros."
+  },
+  {
+    "name": "Wikipedia",
+    "triggers": [
+      "what is",
+      "who is",
+      "who was",
+      "what was",
+      "tell me about",
+      "what are"
+    ],
+    "url": "https://en.wikipedia.org/w/api.php?action=query&format=json&generator=search&gsrsearch={query}&gsrlimit=1&prop=extracts&exintro&explaintext&redirects=1",
+    "windowDays": null,
+    "maxChars": 350,
+    "headers": {
+      "User-Agent": "WatchLLM/1.0 (Apple Watch on-device LLM demo; https://github.com/andrisgauracs)"
+    },
+    "auth": null,
+    "fields": {
+      "summary": [
+        "query",
+        "pages",
+        "*",
+        "extract"
+      ]
+    },
+    "derived": null,
+    "jsonPath": null,
+    "factTemplate": "{summary}"
+  }
+]

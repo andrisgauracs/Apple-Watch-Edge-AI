@@ -1,0 +1,54 @@
+name: WatchLLM
+options:
+  bundleIdPrefix: com.andrisgauracs
+  createIntermediateGroups: true
+  deploymentTarget:
+    watchOS: "10.0"
+
+targets:
+  WatchLLM:
+    type: application
+    platform: watchOS
+    sources:
+      - path: WatchLLM
+      # NB: xcodegen has no `resources:` key — a resource is a source entry
+      # with an explicit build phase. Getting this wrong silently ships an
+      # app with no model in it.
+      - path: models/Falcon-H1-Tiny-90M-Instruct-Q4_K_M.gguf
+        buildPhase: resources
+      - path: models/SmolLM2-135M-Instruct-Q4_K_M.gguf
+        buildPhase: resources
+      # Tool definitions. Git-ignored, so a fresh clone builds with no tools
+      # and stays fully offline. `make project` creates an empty one.
+      - path: WatchLLM/Tools/Tools.json
+        buildPhase: resources
+        optional: true
+    info:
+      path: WatchLLM/Info.plist
+      properties:
+        CFBundleDisplayName: Falcon-H1
+        WKApplication: true
+        WKWatchOnly: true
+        UILaunchScreen: {}
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.andrisgauracs.WatchLLM
+        SWIFT_OBJC_BRIDGING_HEADER: WatchLLM/Bridge/WatchLLM-Bridging-Header.h
+        HEADER_SEARCH_PATHS: $(SRCROOT)/vendor/llamacpp/include
+        # llama.cpp static libs, built for each platform from upstream with a
+        # 4-line patch (docs/LLAMACPP_ON_WATCHOS.md).
+        LIBRARY_SEARCH_PATHS[sdk=watchos*]: $(SRCROOT)/vendor/llamacpp/lib/device
+        LIBRARY_SEARCH_PATHS[sdk=watchsimulator*]: $(SRCROOT)/vendor/llamacpp/lib/simulator
+        # ggml registers its CPU backend from a static initializer, which the
+        # linker discards from a static library unless it is force-loaded.
+        OTHER_LDFLAGS[sdk=watchos*]: -lc++ -lllama -lggml -lggml-base -Wl,-force_load,$(SRCROOT)/vendor/llamacpp/lib/device/libggml-cpu.a
+        OTHER_LDFLAGS[sdk=watchsimulator*]: -lc++ -lllama -lggml -lggml-base -Wl,-force_load,$(SRCROOT)/vendor/llamacpp/lib/simulator/libggml-cpu.a
+        SWIFT_VERSION: "5.0"
+        SUPPORTED_PLATFORMS: watchos watchsimulator
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SUPPORTS_MACCATALYST: NO
+        GENERATE_INFOPLIST_FILE: NO
+        CLANG_ENABLE_MODULES: YES
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 3755AL435H
+        TARGETED_DEVICE_FAMILY: "4"

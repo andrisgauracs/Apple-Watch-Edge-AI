@@ -1,0 +1,17 @@
+# Build products
+build/
+DerivedData/
+.DS_Store
+__pycache__/
+*.pyc
+
+# The Xcode project is generated from project.yml by `make project`.
+# Committing it would also drag in personal xcuserdata.
+WatchLLM.xcodeproj/
+
+# Model weights are fetched by tools/fetch_model.sh, not committed
+models/*.gguf
+
+# Local tool definitions: real endpoints, and API keys if a tool needs one.
+# Tools.example.json IS committed as a template; Tools.json is not.
+WatchLLM/Tools/Tools.json
