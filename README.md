@@ -9,6 +9,11 @@
   Upstream llama.cpp, cross-compiled for watchOS.
 </p>
 
+<p align="center">
+  <img src="docs/img/demo.gif" width="480"
+       alt="An Apple Watch Series 6 held in a hand, streaming generated text on-device">
+</p>
+
 ---
 
 A watchOS app that runs a small quantized language model fully on-device,
